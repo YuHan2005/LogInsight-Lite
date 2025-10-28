@@ -2,6 +2,8 @@ import os
 import datetime
 import sys
 import inspect
+
+
 class Logger():
 
     def __init__(self):
@@ -14,7 +16,6 @@ class Logger():
         name = name.replace(":","-")
 
         self.file = open(name,mode="w")
-
 
     def Get_content(self,content):
         time = str(datetime.datetime.today())
@@ -32,10 +33,9 @@ class Logger():
             lineno = frame.f_lineno  # 调用者行号
 
             # 注意：这里为了格式统一，也应加上 [ERROR][时间] 前缀（原代码缺失，建议补充）
-            full_message = f"[{time}][{filename}:{lineno}] {content}"
+            full_message = f"[{time}][{filename}-{lineno}] {content}"
 
         return full_message
-
 
     def INFO(self,content):
         full_message = "[INFO]"+self.Get_content(content)
@@ -44,8 +44,8 @@ class Logger():
         self.file.flush() # 及时写入文件，避免缓存
 
 
-    def WARRNING(self,content):
-        full_message = "[WARRNING]"+self.Get_content(content)
+    def WARNING(self,content):
+        full_message = "[WARNING]"+self.Get_content(content)
         print("\033[33m"+full_message+"\033[0m")
         self.file.write(full_message+"\n")
 
